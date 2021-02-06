@@ -1,0 +1,32 @@
+
+.nav-bar{
+    height: 10vh;
+    border-bottom: 1px solid whitesmoke; 
+}
+
+.search-container{
+    display:flex;
+    justify-content: center;
+}
+
+.search-input {
+
+    margin-top: 200px;
+    width:50%;
+    display:flex;
+    align-items: center;
+    justify-content: center;
+    
+}
+
+.main-search-input{
+    padding: 11px;
+    width:60%;
+    margin-right:10px;
+    padding-left:20px;
+    border-radius: 25px;
+    outline: none;
+    border: 1px solid rgb(199, 198, 198); 
+}
+
+

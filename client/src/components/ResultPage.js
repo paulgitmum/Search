@@ -19,8 +19,9 @@ function ResultPage() {
 
   const fetchData = async () => {
     try {
-      const request = await fetch("http://localhost:3000/users");
+      const request = await fetch("http://localhost:8080/users");
 const response = await request.json();
+console.log(response);
       let filteredValue = response.filter(
         (employee) => employee.first_name.toLowerCase() === query.toLowerCase()
       );

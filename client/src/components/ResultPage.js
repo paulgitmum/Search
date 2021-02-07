@@ -1,32 +1,32 @@
 import React from "react";
 import "./ResultPage.css";
+import axios from "axios";
 import SearchIcon from "@material-ui/icons/Search";
-import { useLocation } from "react-router-dom";
+import { IconButton } from "@material-ui/core";
+import {MyContext} from '../App'
+
+
 
 function ResultPage() {
+
+  const {state, dispatch} = React.useContext(MyContext)
   const [filtered, setFiltered] = React.useState([]);
   const [age, setAge] = React.useState("");
   const [jobTitle, setJobTitle] = React.useState("");
-  const [notFound, setNotFound] = React.useState("");
-  const location = useLocation();
-
-  let query = location.state.searchQuery;
-  console.log(query);
-
+  const [notFound, setNotFound] = React.useState(false);
+ 
   React.useEffect(() => {
     fetchData();
   }, []);
 
   const fetchData = async () => {
     try {
-      const request = await fetch("http://localhost:8080/users");
-const response = await request.json();
-
-      let filteredValue = response.filter(
-        (employee) => employee.first_name.toLowerCase() === query.toLowerCase()
+      const request = await axios.get("http://localhost:3000/users");
+      let filteredValue = request.data.filter(
+        (employee) => employee.first_name.toLowerCase() === state.query.toLowerCase()
       );
       if(filteredValue.length === 0){
-        setNotFound('Not Found')
+        setNotFound(true)
       }
       setFiltered(filteredValue);
      
@@ -34,6 +34,7 @@ const response = await request.json();
       console.log(error.message);
     }
   };
+
 
   const handleSelectOption = (e) => {
     const selectOption = e.target.value;
@@ -44,8 +45,8 @@ const response = await request.json();
       );
       
       console.log(sortedByLastName);
-
       setFiltered([...filtered, sortedByLastName]);
+
     } else if (selectOption === "age") {
       const sortedByAge = filtered.sort((a, b) => (a.age > b.age ? 1 : -1));
       setFiltered([...filtered, sortedByAge]);
@@ -68,7 +69,6 @@ const response = await request.json();
   };
 
   const handleFilter = () => {
-  
     if (age === "" || jobTitle === "") {
       alert("Invalid search");
     }
@@ -86,13 +86,19 @@ const response = await request.json();
     setJobTitle("");
   };
 
- 
+  const handleQuery = (e) => {
+    const query = e.target.value;
+    dispatch({type:'SET_QUERY',payload:query})
+  };
+
   return (
     <div>
       <div className="nav-bar-result">
         <div className="result-search">
-          <SearchIcon style={{ marginLeft:"30px" }}/>
-          <input placeholder="Search employee..." type="text" />
+          <input placeholder="Search employee..." type="text" onChange={handleQuery}/>
+          <IconButton onClick={fetchData}>
+          <SearchIcon style={{ color:"white" }}/>
+          </IconButton>
         </div>
       </div>
 

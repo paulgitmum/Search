@@ -1,8 +1,14 @@
-# Search
+# Employee Search App
 
-## How to run:
 
-### clone the repo and npm install 
+## How to run
+### copy the search.bundle file in to a new folder.
+### open a new git terminal and access the directory.
+### clone the repo by running this command - git clone search.bundle < new repo name>
+### open the folder on VScode and run npm install for both client side and backend side 
+### finally npm start
+
+
 
 ## Test cases.
 
